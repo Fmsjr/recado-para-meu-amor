@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para você 🤍</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at top, #fff1f6, #fde7ef);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: #3f3f3f;
+}
+
+.container {
+    max-width: 420px;
+    padding: 32px;
+    text-align: center;
+    z-index: 2;
+}
+
+.text {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.text strong {
+    color: #d63384;
+}
+
+.buttons {
+    margin-top: 32px;
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+button {
+    border: none;
+    background: #ff5fa2;
+    color: white;
+    padding: 12px 26px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 12px 26px rgba(255,95,162,0.35);
+    transition: transform 0.25s ease;
+}
+
+button.secondary {
+    background: #ff8fc0;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+.hearts {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.heart {
+    position: absolute;
+    bottom: -30px;
+    font-size: 14px;
+    color: rgba(255, 95, 162, 0.45);
+    animation: floatUp linear forwards;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-120vh);
+        opacity: 0;
+    }
+}
+
+.show {
+    opacity: 1;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div id="text" class="text"></div>
+    <div id="buttons" class="buttons"></div>
+</div>
+
+<div class="hearts" id="hearts"></div>
+
+<script>
+let etapa = 0;
+
+const cenas = [
+    {
+        texto: "Antes de tudo…<br><br>isso aqui é só para você.<br>Sem pressa. Sem distração.",
+        botoes: [{ label: "Continuar 🤍", acao: () => proximo() }]
+    },
+    {
+        texto: "Vamos brincar rapidinho?<br><br>Prometo que é fácil.",
+        botoes: [
+            { label: "Vamos 😌", acao: () => proximo() },
+            { label: "Confio em você 😏", acao: () => proximo() }
+        ]
+    },
+    {
+        texto: "Pergunta importante:<br><br>Você sabe quem é o amor da minha vida?",
+        botoes: [
+            { label: "Eu 😍", acao: () => proximo() },
+            { label: "Acho que sim 💭", acao: () => proximo() }
+        ]
+    },
+    {
+        texto: "<strong>Geovana</strong>,<br><br>desde o momento em que você entrou na minha vida,<br>tudo ficou mais leve.",
+        botoes: [{ label: "Continuar 💗", acao: () => proximo() }]
+    },
+    {
+        texto: "Você é meu amor,<br>minha paz,<br>meu sorriso fácil<br>e o meu lar.",
+        botoes: [{ label: "💍", acao: () => proximo() }]
+    },
+    {
+        texto: "Prometo te respeitar,<br>te cuidar,<br>te apoiar<br>e te amar — todos os dias.<br><br>Nos dias bons e, principalmente, nos difíceis.",
+        botoes: [{ label: "Sempre 🤍", acao: () => proximo() }]
+    },
+    {
+        texto: "Obrigado por ser minha noiva.<br><br>Eu te amo.<br>Hoje.<br>E sempre.",
+        botoes: []
+    }
+];
+
+const textEl = document.getElementById("text");
+const buttonsEl = document.getElementById("buttons");
+
+function renderCena() {
+    textEl.classList.remove("show");
+    setTimeout(() => {
+        textEl.innerHTML = cenas[etapa].texto;
+        textEl.classList.add("show");
+
+        buttonsEl.innerHTML = "";
+        cenas[etapa].botoes.forEach(b => {
+            const btn = document.createElement("button");
+            btn.textContent = b.label;
+            btn.onclick = b.acao;
+            buttonsEl.appendChild(btn);
+        });
+    }, 500);
+}
+
+function proximo() {
+    etapa++;
+    renderCena();
+}
+
+renderCena();
+
+// corações suaves
+function criarCoracao() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "❤";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (10 + Math.random() * 8) + "px";
+    heart.style.animationDuration = (8 + Math.random() * 5) + "s";
+    document.getElementById("hearts").appendChild(heart);
+
+    setTimeout(() => heart.remove(), 13000);
+}
+
+setInterval(criarCoracao, 900);
+</script>
+
+</body>
+</html>
